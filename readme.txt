@@ -41,7 +41,7 @@ Would you like to enable and retry (this will take a few minutes)?
 (y/N)?  y
 
 What images are available?
-gcloud compute images list
+gcloud compute images list 
 
 source createNetwork.sh
 source createInstance.sh
@@ -52,5 +52,9 @@ the first attempt at ssh creates the key, you will be prompted for a passphrase
 Your identification has been saved in /Users/burr/.ssh/google_compute_engine.
 Your public key has been saved in /Users/burr/.ssh/google_compute_engine.pub.
 
+You can generate keys manually but the output is a .json file
+gcloud iam service-accounts create myserviceaccount
 
+gcloud iam service-accounts keys create \
+      --iam-account myserviceaccount@fromcli7102018.iam.gserviceaccount.com key.json
 
