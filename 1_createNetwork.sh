@@ -20,6 +20,11 @@ gcloud compute firewall-rules create ${CLUSTERID}-443 \
   --action=ALLOW --rules=tcp:443 \
   --source-ranges=${SOURCES} --target-tags=${CLUSTERID}-master
 
+gcloud compute firewall-rules create ${CLUSTERID}-8443 \
+  --direction=INGRESS --priority=1000  --network=${CLUSTERID_NETWORK} \
+  --action=ALLOW --rules=tcp:8443 \
+  --source-ranges=${SOURCES} --target-tags=${CLUSTERID}-master
+
 gcloud compute firewall-rules create ${CLUSTERID}-80 \
   --direction=INGRESS --priority=2000  --network=${CLUSTERID_NETWORK} \
   --action=ALLOW --rules=tcp:80 \
@@ -28,4 +33,9 @@ gcloud compute firewall-rules create ${CLUSTERID}-80 \
 gcloud compute firewall-rules create ${CLUSTERID}-22 \
   --direction=INGRESS --priority=3000  --network=${CLUSTERID_NETWORK} \
   --action=ALLOW --rules=tcp:22 \
+  --source-ranges=${SOURCES} --target-tags=${CLUSTERID}-master
+
+gcloud compute firewall-rules create ${CLUSTERID}-2376 \
+  --direction=INGRESS --priority=3000  --network=${CLUSTERID_NETWORK} \
+  --action=ALLOW --rules=tcp:2376 \
   --source-ranges=${SOURCES} --target-tags=${CLUSTERID}-master

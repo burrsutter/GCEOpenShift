@@ -58,3 +58,10 @@ gcloud iam service-accounts create myserviceaccount
 gcloud iam service-accounts keys create \
       --iam-account myserviceaccount@fromcli7102018.iam.gserviceaccount.com key.json
 
+ssh into the VM
+yum install -y docker net-tools firewalld wget git httpd-tools patch
+groupadd docker
+usermod -aG docker burr
+systemctl start docker
+systemctl enable docker
+
