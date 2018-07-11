@@ -40,6 +40,9 @@ API [compute.googleapis.com] not enabled on project [634704714398].
 Would you like to enable and retry (this will take a few minutes)? 
 (y/N)?  y
 
+What images are available?
+gcloud compute images list
+
 source createNetwork.sh
 source createInstance.sh
 
