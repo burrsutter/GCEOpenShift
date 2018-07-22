@@ -52,11 +52,43 @@ the first attempt at ssh creates the key, you will be prompted for a passphrase
 Your identification has been saved in /Users/burr/.ssh/google_compute_engine.
 Your public key has been saved in /Users/burr/.ssh/google_compute_engine.pub.
 
-You can generate keys manually but the output is a .json file
+You can generate keys manually but the output is a .json file via the following steps
+
+
 gcloud iam service-accounts create myserviceaccount
+
+gcloud projects add-iam-policy-binding fromcli7102018 \
+    --member serviceAccount:myserviceaccount@fromcli7102018.iam.gserviceaccount.com --role roles/editor
 
 gcloud iam service-accounts keys create \
       --iam-account myserviceaccount@fromcli7102018.iam.gserviceaccount.com key.json
+
+
+or
+
+gcloud iam service-accounts create vm-instance-admin \
+            --display-name "Projects VM Instance Admin"
+
+gcloud iam service-accounts keys create \
+            --iam-account vm-instance-admin@myansibleopenshift.iam.gserviceaccount.com gce-key.json
+
+gcloud projects add-iam-policy-binding myansibleopenshift \
+    --member serviceAccount:vm-instance-admin@myansibleopenshift.iam.gserviceaccount.com --role roles/compute.instanceAdmin.v1
+
+gcloud projects add-iam-policy-binding myansibleopenshift \
+    --member serviceAccount:vm-instance-admin@myansibleopenshift.iam.gserviceaccount.com --role roles/compute.networkAdmin
+
+gcloud projects add-iam-policy-binding myansibleopenshift \
+    --member serviceAccount:vm-instance-admin@myansibleopenshift.iam.gserviceaccount.com --role roles/iam.serviceAccountUser
+
+
+Note: this process does not seem to work
+to extract private key (pem) from .json file
+brew install jq
+cat gce-key.json | jq .private_key | tee temp.pem
+chmod 400 temp.pem
+
+once the VM is up,
 
 ssh into the VM
 yum install -y docker net-tools firewalld wget git httpd-tools patch
